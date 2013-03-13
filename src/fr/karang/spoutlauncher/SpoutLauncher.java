@@ -10,13 +10,18 @@ import javax.swing.JPanel;
 
 public class SpoutLauncher extends Frame {
 	private static final long serialVersionUID = 1L;
+	private final LogoPanel logo;
 	private final OptionsPanel options;
+	
 	
 	public SpoutLauncher() {
 		super("Unofficial Spout Launcher");
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
+		
+		logo = new LogoPanel();
+		panel.add(logo, "North");
 		
 		options = new OptionsPanel();
 		panel.add(options, "Center");
