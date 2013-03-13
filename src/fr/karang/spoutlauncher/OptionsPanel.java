@@ -1,5 +1,6 @@
 package fr.karang.spoutlauncher;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Label;
 
@@ -13,7 +14,6 @@ public class OptionsPanel extends JPanel {
 	private final JComboBox rendermode;
 	private final JCheckBox debug;
 	private final JCheckBox ccoveride;
-	
 	
 	public OptionsPanel() {
 		setLayout(new GridLayout(4, 2));
@@ -33,5 +33,9 @@ public class OptionsPanel extends JPanel {
 		add(new Label("CCoveride:"));
 		ccoveride = new JCheckBox();
 		add(ccoveride);
+	}
+	
+	public String getLaunchOptions() {
+		return "";
 	}
 }
