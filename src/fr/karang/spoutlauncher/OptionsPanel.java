@@ -1,38 +1,60 @@
 package fr.karang.spoutlauncher;
 
-import java.awt.Dimension;
+import java.awt.Desktop;
 import java.awt.GridLayout;
-import java.awt.Label;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 
 public class OptionsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	
 	private final JComboBox platform;
 	private final JComboBox rendermode;
 	private final JCheckBox debug;
 	private final JCheckBox ccoveride;
 	
+	private final JLabel pluginsDir;
+	private final JButton launch;
+	
 	public OptionsPanel() {
-		setLayout(new GridLayout(4, 2));
+		setLayout(new GridLayout(5, 2));
 		
-		add(new Label("Platform:"));
+		add(new JLabel("Platform:"));
 		platform = new JComboBox(new String[] {"Client", "Server", "Proxy"});
 		add(platform);
 		
-		add(new Label("Rendermode:"));
+		add(new JLabel("Rendermode:"));
 		rendermode = new JComboBox(new String[] {"GL20", "GL30", "GL40"});
 		add(rendermode);
 		
-		add(new Label("Debug mode:"));
+		add(new JLabel("Debug mode:"));
 		debug = new JCheckBox();
 		add(debug);
 		
-		add(new Label("CCoveride:"));
+		add(new JLabel("CCoveride:"));
 		ccoveride = new JCheckBox();
 		add(ccoveride);
+		
+		pluginsDir = new JLabel("Open plugin directory...");
+		pluginsDir.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent evt) {
+				try {
+					Desktop.getDesktop().open(Util.getPluginDirectory());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		add(pluginsDir);
+		
+		launch = new JButton("Launch Spout !");
+		add(launch);
 	}
 	
 	public String getLaunchOptions() {

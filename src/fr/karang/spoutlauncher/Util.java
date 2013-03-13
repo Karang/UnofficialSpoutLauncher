@@ -1,14 +1,22 @@
 package fr.karang.spoutlauncher;
 
 import java.io.File;
+import java.net.URI;
 
 public class Util {
 	private static File workDir = null;
+	private static File pluginDir = null;
 	
 	public static File getWorkingDirectory() {
 		if (workDir==null)
 			workDir = getWorkingDirectory("unofficialSpout");
 		return workDir;
+	}
+	
+	public static File getPluginDirectory() {
+		if (pluginDir==null)
+			pluginDir = getWorkingDirectory("unofficialSpout/plugins");
+		return pluginDir;
 	}
 	
 	public static File getWorkingDirectory(String appName) {
@@ -35,6 +43,7 @@ public class Util {
 		}
 		if ((!workingDirectory.exists()) && (!workingDirectory.mkdirs()))
 			throw new RuntimeException("The working directory could not be created: " + workingDirectory);
+		System.out.println(workingDirectory.getAbsolutePath());
 		return workingDirectory;
 	}
 	
