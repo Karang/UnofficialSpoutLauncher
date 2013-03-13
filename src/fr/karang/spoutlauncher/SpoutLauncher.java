@@ -13,6 +13,7 @@ public class SpoutLauncher extends Frame {
 	private final LogoPanel logo;
 	private final OptionsPanel options;
 	
+	private final SpoutDownloader downloader;
 	
 	public SpoutLauncher() {
 		super("Unofficial Spout Launcher");
@@ -36,6 +37,9 @@ public class SpoutLauncher extends Frame {
 				System.exit(0);
 			}
 		});
+		
+		downloader = new SpoutDownloader();
+		downloader.start();
 	}
 	
 	public static void main(String [] args) {
