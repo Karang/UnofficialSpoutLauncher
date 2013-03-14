@@ -3,7 +3,9 @@ package fr.karang.spoutlauncher;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,11 +16,13 @@ import org.w3c.dom.NodeList;
 
 public class SpoutDownloader extends Thread {
 	
-	public Map<String, File> toDownload = new HashMap<String, File>();
+	public Map<String, Integer> toDownload = new HashMap<String, Integer>();
+	private Config config;
 	
-	public SpoutDownloader() {
-		addJarToDownload("http://build.spout.org/job/Spout/", false);
-		addJarToDownload("http://build.spout.org/job/Vanilla/", true);
+	public SpoutDownloader(Config config) {
+		this.config = config;
+		addJarToDownload("http://build.spout.org/job/Spout/", config.lastSpoutVersion);
+		addJarToDownload("http://build.spout.org/job/Vanilla/", config.lastVanillaVersion);
 	}
 	
 	public boolean checkJenkinsVersion(String urlPrefix, int currentVersion) {
@@ -49,16 +53,22 @@ public class SpoutDownloader extends Thread {
 		}
 	}
 	
-	public void addJarToDownload(String urlPrefix, boolean isPlugin) {
-		File dir = Util.getWorkingDirectory();
-		if (isPlugin)
-			dir = Util.getPluginDirectory();
-		toDownload.put(urlPrefix, dir);
+	public void addJarToDownload(String urlPrefix, int version) {
+		toDownload.put(urlPrefix, version);
 	}
 	
 	public void run() {
+		List<String> notUpToDate = new ArrayList<String>();
 		for (String url : toDownload.keySet()) {
-			checkJenkinsVersion(url, 0);
+			if (!checkJenkinsVersion(url, toDownload.get(url))) {
+				notUpToDate.add(url);
+			}
+		}
+		
+		boolean spout = true;
+		for (String url : notUpToDate) {
+			System.out.println(url+spout);
+			spout = false;
 		}
 	}
 }

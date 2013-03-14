@@ -14,9 +14,13 @@ public class SpoutLauncher extends Frame {
 	private final OptionsPanel options;
 	
 	private final SpoutDownloader downloader;
+	private final Config config;
 	
 	public SpoutLauncher() {
 		super("Unofficial Spout Launcher");
+		
+		config = new Config();
+		config.load();
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -24,7 +28,7 @@ public class SpoutLauncher extends Frame {
 		logo = new LogoPanel();
 		panel.add(logo, "North");
 		
-		options = new OptionsPanel();
+		options = new OptionsPanel(config);
 		panel.add(options, "Center");
 		
 		panel.setPreferredSize(new Dimension(400, 600));
@@ -34,11 +38,13 @@ public class SpoutLauncher extends Frame {
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
+				options.save(config);
+				config.save();
 				System.exit(0);
 			}
 		});
 		
-		downloader = new SpoutDownloader();
+		downloader = new SpoutDownloader(config);
 		downloader.start();
 	}
 	
