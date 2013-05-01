@@ -38,11 +38,9 @@ public class SpoutDownloader extends SwingWorker<Void, Void> {
 			}
 		}
 		
-		boolean spout = true;
 		for (String url : notUpToDate) {
-			if (spout) {
+			if (url.contains("Spout")) {
 				downloadJarFromJenkins(url, Util.getWorkingDirectory().getAbsolutePath());
-				spout = false;
 			} else {
 				downloadJarFromJenkins(url, Util.getPluginDirectory().getAbsolutePath());
 			}

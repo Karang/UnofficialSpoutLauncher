@@ -105,13 +105,13 @@ public class OptionsPanel extends JPanel implements ActionListener, PropertyChan
 		StringBuilder sb = new StringBuilder();
 		OS os = Util.getPlatform();
 		if (os==OS.macos) {
-			sb.append("#!/bin/bash\n");
+			sb.append("#!/bin/bash;");
 			sb.append("cd \"${0%/*}\"; java -Xms1024M -Xmx1024M -jar spout*.jar ");
 		} else if (os==OS.windows) {
-			sb.append("@echo off\n");
+			sb.append("@echo off;");
 			sb.append("java -server -XX:+UseG1GC -Xms1024M -Xmx1024M -jar spout*.jar ");
 		} else if (os==OS.linux || os==OS.solaris) {
-			sb.append("#/bin/sh\n");
+			sb.append("#/bin/sh;");
 			sb.append("java -server -XX:+UseG1GC -Xms1024M -Xmx1024M -jar spout*.jar ");
 		}
 		
