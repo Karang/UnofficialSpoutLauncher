@@ -1,7 +1,6 @@
 package fr.karang.spoutlauncher;
 
 import java.io.File;
-import java.net.URI;
 
 public class Util {
 	private static File workDir = null;

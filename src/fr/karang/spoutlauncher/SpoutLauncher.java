@@ -5,15 +5,17 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
 public class SpoutLauncher extends Frame {
 	private static final long serialVersionUID = 1L;
+	private static SpoutLauncher launcher;
+	
 	private final LogoPanel logo;
 	private final OptionsPanel options;
 	
-	private final SpoutDownloader downloader;
 	private final Config config;
 	
 	public SpoutLauncher() {
@@ -43,13 +45,33 @@ public class SpoutLauncher extends Frame {
 				System.exit(0);
 			}
 		});
-		
-		downloader = new SpoutDownloader(config);
-		downloader.start();
+	}
+	
+	public void launchGame() {
+		String cmd = options.getLaunchOptions();
+		System.out.println(cmd);
+		try {
+			Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Config getConfig() {
+		return config;
+	}
+	
+	public static SpoutLauncher getInstance() {
+		return launcher;
 	}
 	
 	public static void main(String [] args) {
-		SpoutLauncher launcher = new SpoutLauncher();
-		launcher.setVisible(true);
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	launcher = new SpoutLauncher();
+        		launcher.setVisible(true);
+            }
+        });
+		
 	}
 }

@@ -58,4 +58,12 @@ public class Config {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setPluginVersion(String url, int version) {
+		if (url.contains("Spout")) {
+			lastSpoutVersion = version;
+		} else if (url.contains("Vanilla")) {
+			lastVanillaVersion = version;
+		}
+	}
 }
